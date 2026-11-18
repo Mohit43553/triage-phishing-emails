@@ -1,0 +1,17 @@
+title: Suspicious PowerShell Download Cradle
+id: 4a8b2c90-1111-4444-8888-abcdef123456
+status: test
+description: Detects PowerShell executing remote web downloads
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - "powershell.exe"
+      - "pwsh.exe"
+    CommandLine|contains:
+      - "Invoke-WebRequest"
+      - "Net.WebClient"
+      - "iwr"
+  condition: selection
